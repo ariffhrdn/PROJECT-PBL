@@ -1,0 +1,34 @@
+body {
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-image {
+    height: 100vh;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 8px;
+    border: none;
+    overflow: hidden;
+}
+
+.login-logo {
+    max-width: 80px;
+    border-radius: 50%;
+}
+
+.alert {
+    font-size: 14px;
+    text-align: center;
+}
