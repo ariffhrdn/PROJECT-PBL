@@ -8,7 +8,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'dosen') {
 }
 
 $query = "SELECT * FROM sanksi";
-$result = $conn->query($query);
+$result = sqlsrv_query($conn, $query);
+
+// Cek apakah query berhasil
+if ($result === false) {
+    die(print_r(sqlsrv_errors(), true)); // Debug jika terjadi error pada query
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -23,19 +28,17 @@ $result = $conn->query($query);
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nama Sanksi</th>
                 <th>Deskripsi</th>
                 <th>Kategori</th>
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= $row['id_sanksi'] ?></td>
-                    <td><?= $row['nama_sanksi'] ?></td>
-                    <td><?= $row['deskripsi'] ?></td>
-                    <td><?= $row['kategori'] ?></td>
-                </tr>
+            <?php while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['id']) ?></td>
+                        <td><?= htmlspecialchars($row['deskripsi']) ?></td>
+                        <td><?= htmlspecialchars($row['kategori']) ?></td>
+                    </tr>
             <?php endwhile; ?>
         </tbody>
     </table>

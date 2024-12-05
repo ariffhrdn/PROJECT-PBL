@@ -8,7 +8,13 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'dosen') {
 }
 
 $query = "SELECT * FROM tata_tertib";
-$result = $conn->query($query);
+$result = sqlsrv_query($conn, $query);
+
+// Cek apakah query berhasil
+if ($result === false) {
+    die(print_r(sqlsrv_errors(), true)); // Debug jika terjadi error pada query
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -27,10 +33,10 @@ $result = $conn->query($query);
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
+            <?php while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)): ?>
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['aturan'] ?></td>
+                    <td><?= htmlspecialchars($row['id']) ?></td>
+                    <td><?= htmlspecialchars($row['aturan']) ?></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
